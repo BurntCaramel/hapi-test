@@ -1,0 +1,41 @@
+Arguments: 
+  /Users/smith/.nvm/versions/node/v8.8.1/bin/node /usr/local/Cellar/yarn/1.2.1/libexec/bin/yarn.js add hapi
+
+PATH: 
+  /Users/smith/.nvm/versions/node/v8.8.1/bin:/usr/local/bin:/usr/local/sbin:~/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Server.app/Contents/ServerRoot/usr/bin:/Applications/Server.app/Contents/ServerRoot/usr/sbin
+
+Yarn version: 
+  1.2.1
+
+Node version: 
+  8.8.1
+
+Platform: 
+  darwin x64
+
+npm manifest: 
+  {
+    "name": "hapi-test",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT"
+    "scripts": {
+    	"dev": "nodemon ./src",
+    	"start": "node ./src"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  SyntaxError: /Users/smith/Projects/Node/hapi-test/package.json: Unexpected string in JSON at position 90
+      at JSON.parse (<anonymous>)
+      at /usr/local/Cellar/yarn/1.2.1/libexec/lib/cli.js:770:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/Cellar/yarn/1.2.1/libexec/lib/cli.js:92:30)
+      at /usr/local/Cellar/yarn/1.2.1/libexec/lib/cli.js:103:13
+      at <anonymous>
