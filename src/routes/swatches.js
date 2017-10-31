@@ -13,13 +13,18 @@ const makeRect = (width, height, { fill } = {}) => (
 	`<rect width="${width}" height="${height}" ${renderAttrs({ fill })} />`
 )
 
+const hexDigits = '0123456789abcdef'
+const randomNumberUpTo = (max) => Math.floor(Math.random() * (max + 1))
+const randomHex = () => hexDigits[randomNumberUpTo(15)]
+const randomRGB = () => '#' + randomHex() + randomHex() + randomHex() + randomHex() + randomHex() + randomHex()
+
 module.exports = [
 	{
 		method: 'get',
 		path: '/swatches/random',
 		handler(request, reply) {
 			reply(makeSVG(20, 20, [
-				makeRect(20, 20, { fill: '#0ff' })
+				makeRect(20, 20, { fill: randomRGB() })
 			]))
 			.type('image/svg+xml')
 		}
