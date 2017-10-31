@@ -27,7 +27,7 @@ module.exports = [
 	{
 		method: 'get',
 		path: '/swatches/{fill}',
-		handler(request, reply) {
+		handler({ params }, reply) {
 			reply(makeSVG(20, 20, [                                                                                            
 				makeRect(20, 20, { fill: params.fill })                                                                             
 			]))                                                                                                                
