@@ -11,6 +11,7 @@
     "hapi": "^16.6.2"
   },
   "devDependencies": {
-    "nodemon": "^1.12.1"
+    "nodemon": "^1.12.1",
+    "prettier": "1.7.4"
   }
 }
