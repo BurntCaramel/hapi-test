@@ -26,10 +26,10 @@ module.exports = [
 	},
 	{
 		method: 'get',
-		path: '/swatches/{fill}',
+		path: '/swatches/hex:{fill}',
 		handler({ params }, reply) {
 			reply(makeSVG(20, 20, [                                                                                            
-				makeRect(20, 20, { fill: params.fill })                                                                             
+				makeRect(20, 20, { fill: '#' + params.fill })                                                                             
 			]))                                                                                                                
 			.type('image/svg+xml')   
 		}
