@@ -23,12 +23,18 @@ const makeRect = (width, height, { fill } = {}) => (
 	`<rect width="${width}" height="${height}" ${renderAttrs({ fill })} />`
 )
 
+const makeCircle = (r, cx, cy, { fill } = {}) => (
+	`<circle ${renderAttrs({ r, cx, cy, fill })} />`
+)
+
+const toBottom = { x1: '50%', x2: '50%', y1: '0%', y2: '100%' }
+
 const makeStop = ({ offset, color }) => (
 	`<stop offset="${offset}" stop-color="${color}" />`
 )
 
-const prepareLinearGradient = (stops) => (id) => (
-	`<linearGradient id="${id}">${stops.map(makeStop).join('')}</linearGradient>`
+const prepareLinearGradient = (stops, { x1, x2, y1, y2 } = {}) => (id) => (
+	`<linearGradient ${renderAttrs({ id, x1, x2, y1, y2 })}>${stops.map(makeStop).join('')}</linearGradient>`
 )
 
 const hexDigits = '0123456789abcdef'
@@ -42,15 +48,30 @@ const randomRGB = () => (
 module.exports = [
 	{
 		method: 'get',
-		path: '/swatches/random-gradient',
+		path: '/swatches/random-gradient/rect',
 		handler(request, reply) {
 			reply(makeSVG(20, 20, {
 				gradient1: prepareLinearGradient([
 					{ offset: '0%', color: randomRGB() },
 					{ offset: '100%', color: randomRGB() }
-				])
+				], toBottom)
 			}, [
 				makeRect(20, 20, { fill: 'url(#gradient1)' })
+			]))
+			.type('image/svg+xml')
+		}
+	},
+	{
+		method: 'get',
+		path: '/swatches/random-gradient/circle',
+		handler(request, reply) {
+			reply(makeSVG(20, 20, {
+				gradient1: prepareLinearGradient([
+					{ offset: '0%', color: randomRGB() },
+					{ offset: '100%', color: randomRGB() }
+				], toBottom)
+			}, [
+				makeCircle(10, 10, 10, { fill: 'url(#gradient1)' })
 			]))
 			.type('image/svg+xml')
 		}
