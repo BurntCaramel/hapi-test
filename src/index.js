@@ -17,6 +17,9 @@ server.route([
 server.route(require('./routes/swatches'))
 
 server.start()
+	.then(() => {
+		console.log(`Started ${JSON.stringify(server.connections[0].info.uri)}`)
+	})
 	.catch(error => {
 		console.error(error)
 	})
