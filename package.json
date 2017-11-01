@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon ./src",
-    "start": "node ./src"
+    "start": "node ./src",
+    "p": "prettier 'src/**/*.js'"
   },
   "dependencies": {
     "hapi": "^16.6.2"
