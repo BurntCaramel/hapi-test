@@ -45,35 +45,60 @@ const randomRGB = () => (
 	// + randomHex() + randomHex() + randomHex()
 )
 
-module.exports = [
+const processColor = (input) => {
+	if (input === 'random') {
+		return randomRGB()
+	}
+	else {
+		return input
+	}
+}
+
+const svgMimeType = 'image/svg+xml'
+
+const routes = [
 	{
 		method: 'get',
-		path: '/swatches/random-gradient/rect',
+		path: '/swatches',
 		handler(request, reply) {
-			reply(makeSVG(20, 20, {
-				gradient1: prepareLinearGradient([
-					{ offset: '0%', color: randomRGB() },
-					{ offset: '100%', color: randomRGB() }
-				], toBottom)
-			}, [
-				makeRect(20, 20, { fill: 'url(#gradient1)' })
-			]))
-			.type('image/svg+xml')
+			reply(routes.map(({ method, path }) => ({
+				method,
+				path
+			})))
 		}
 	},
 	{
 		method: 'get',
-		path: '/swatches/random-gradient/circle',
-		handler(request, reply) {
-			reply(makeSVG(20, 20, {
+		path: '/swatches:{width},{height}/rect/fill:random-gradient',
+		handler({
+			params: { width, height }
+		}, reply) {
+			reply(makeSVG(width, height, {
 				gradient1: prepareLinearGradient([
 					{ offset: '0%', color: randomRGB() },
 					{ offset: '100%', color: randomRGB() }
 				], toBottom)
 			}, [
-				makeCircle(10, 10, 10, { fill: 'url(#gradient1)' })
+				makeRect('100%', '100%', { fill: 'url(#gradient1)' })
 			]))
-			.type('image/svg+xml')
+			.type(svgMimeType)
+		}
+	},
+	{
+		method: 'get',
+		path: '/swatches:{width},{height}/circle/fill:linear-gradient:{color1},{color2}',
+		handler({
+			params: { width, height, color1, color2 }
+		}, reply) {
+			reply(makeSVG(width, height, {
+				gradient1: prepareLinearGradient([
+					{ offset: '0%', color: processColor(color1) },
+					{ offset: '100%', color: processColor(color2) }
+				], toBottom)
+			}, [
+				makeCircle('50%', '50%', '50%', { fill: 'url(#gradient1)' })
+			]))
+			.type(svgMimeType)
 		}
 	},
 	{
@@ -83,7 +108,7 @@ module.exports = [
 			reply(makeSVG(20, 20, [], [
 				makeRect(20, 20, { fill: randomRGB() })
 			]))
-			.type('image/svg+xml')
+			.type(svgMimeType)
 		}
 	},
 	{
@@ -93,7 +118,9 @@ module.exports = [
 			reply(makeSVG(20, 20, [                                                                                            
 				makeRect(20, 20, { fill: '#' + params.fill })                                                                             
 			]))                                                                                                                
-			.type('image/svg+xml')   
+			.type(svgMimeType)   
 		}
 	}
 ]
+
+module.exports = routes
