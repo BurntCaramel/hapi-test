@@ -1,14 +1,5 @@
 const Boom = require('boom')
 
-const renderDefs = (defs) => Object.keys(defs)
-	.reduce((lines, id) => {
-		const maker = defs[id]
-		const xml = maker(id)
-		lines.push(xml)
-		return lines
-	}, [])
-	.join('\n')
-
 const makeSVG = (width, height, defs, children) => (
 `<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="${width}" height="${height}">
 <defs>${defs.join('\n')}</defs>
@@ -18,7 +9,13 @@ ${children.join('\n')}
 
 const buildSVG = (width, height, buildChildren) => {
 	let defs = []
-	const children = buildChildren(defs)
+	const addDef = (makeElement) => {
+		const id = `item-${defs.length}`
+		const element = makeElement(id)
+		defs.push(element)
+		return `url(#${id})`
+	}
+	const children = buildChildren(addDef)
 	return makeSVG(width, height, defs, children)
 }
 
@@ -41,12 +38,10 @@ const makeStop = ({ offset, color }) => (
 	`<stop offset="${offset}" stop-color="${color}" />`
 )
 
-const prepareLinearGradient = (defs, stops, { x1, x2, y1, y2 } = {}) => {
-	const id = `item-${defs.length}`
-	defs.push(
+const prepareLinearGradient = (addDef, stops, { x1, x2, y1, y2 } = {}) => {
+	return addDef(id =>
 		`<linearGradient ${renderAttrs({ id, x1, x2, y1, y2 })}>${stops.map(makeStop).join('')}</linearGradient>`
 	)
-	return `url(#${id})`
 }
 
 const hexDigits = '0123456789abcdef'
@@ -66,11 +61,11 @@ const processColor = (input) => {
 	}
 }
 
-const processFill = (defs, input) => {
+const processFill = (addDef, input) => {
 	const [type, valuesIn] = input.split(':')
 	if (type === 'linear-gradient') {
 		const [color1, color2] = valuesIn.split(',')
-		return prepareLinearGradient(defs, [
+		return prepareLinearGradient(addDef, [
 			{ offset: '0%', color: processColor(color1) },
 			{ offset: '100%', color: processColor(color2) }
 		], toBottom)
@@ -102,8 +97,8 @@ const routes = [
 		handler({
 			params: { width, height, fill }
 		}, reply) {
-			reply(buildSVG(width, height, (defs) => [
-				makeRect('100%', '100%', { fill: processFill(defs, fill) })
+			reply(buildSVG(width, height, (addDef) => [
+				makeRect('100%', '100%', { fill: processFill(addDef, fill) })
 			]))
 			.type(svgMimeType)
 		}
@@ -114,8 +109,8 @@ const routes = [
 		handler({
 			params: { width, height, fill }
 		}, reply) {
-			reply(buildSVG(width, height, (defs) => [
-				makeCircle('50%', '50%', '50%', { fill: processFill(defs, fill) })
+			reply(buildSVG(width, height, (addDef) => [
+				makeCircle('50%', '50%', '50%', { fill: processFill(addDef, fill) })
 			]))
 			.type(svgMimeType)
 		}
