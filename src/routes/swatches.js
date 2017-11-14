@@ -49,7 +49,7 @@ const randomNumberUpTo = (max) => Math.floor(Math.random() * (max + 1))
 const randomHex = () => hexDigits[randomNumberUpTo(15)]
 const randomRGB = () => (
 	'#' + randomHex() + randomHex() + randomHex()
-	// + randomHex() + randomHex() + randomHex()
+	+ randomHex() + randomHex() + randomHex()
 )
 
 const processColor = (input) => {
