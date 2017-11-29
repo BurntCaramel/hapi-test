@@ -46,7 +46,7 @@ export default class Swatches extends Component {
 					<img src={ svgURL } />
 				</div>
 				<div className='mb-3'>
-					<a href={ svgURL }>SVG URL</a>
+					<a href={ svgURL }>Link to SVG</a>
 				</div>
 				<div className='mb-3'>
 					<Field label='Width' type='number' value={ width } onChange={ linkState(this, 'width') } />
