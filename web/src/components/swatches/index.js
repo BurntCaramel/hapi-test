@@ -22,13 +22,13 @@ export default class Swatches extends Component {
 
 		return (
 			<section class={style.section}>
-				<div>
+				<div className='mb-3'>
 					<img src={ svgURL } />
 				</div>
-				<div>
-					{ svgURL }
+				<div className='mb-3'>
+					<a href={ svgURL }>SVG URL</a>
 				</div>
-				<div>
+				<div className='mb-3'>
 					<Field label='Width' type='number' value={ width } onChange={ linkState(this, 'width') } />
 					<Field label='Height' type='number' value={ height } onChange={ linkState(this, 'height') } />
 					<Choice label='Shape' value={ shape } onChange={ linkState(this, 'shape') }>
@@ -42,9 +42,9 @@ export default class Swatches extends Component {
 						<Field label='Color 1' value={ fill.args[0] } onChange={ linkState(this, 'fill.args.0') } />
 						<Field label='Color 2' value={ fill.args[1] } onChange={ linkState(this, 'fill.args.1') } />
 					</FormGroup>
-					<div>
-						<Button>New</Button>
-					</div>
+				</div>
+				<div>
+					<Button>New</Button>
 				</div>
 			</section>
 		);
