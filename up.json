@@ -1,3 +1,11 @@
 {
-  "name": "slice"
+  "name": "slice",
+  "stages": {
+    "development": {
+      "domain": "latest.1.slice.collected.design"
+    },
+    "production": {
+      "domain": "1.slice.collected.design"
+    }
+  }
 }
