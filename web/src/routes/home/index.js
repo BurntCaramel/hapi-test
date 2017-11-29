@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 import style from './style';
-import Swatches from '../../components/Swatches'
+import Swatches from '../../components/swatches'
 
 export default class Home extends Component {
 	render() {
