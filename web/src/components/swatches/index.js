@@ -2,6 +2,7 @@ import { h, Component } from 'preact';
 import { Link } from 'preact-router/match';
 import linkState from 'linkstate'
 import style from './style';
+import { Field, Choice, Button } from '../forms'
 import { getURLForSVG, linearGradientRandom } from '../../api/swatches'
 
 export default class Swatches extends Component {
@@ -23,13 +24,15 @@ export default class Swatches extends Component {
 					{ svgURL }
 				</div>
 				<div>
-					<input type='number' value={ width } onInput={ linkState(this, 'width') } />
-					<input type='number' value={ height } onInput={ linkState(this, 'height') } />
-					<select value={ shape } onChange={ linkState(this, 'shape') }>
+					<Field label='Width' type='number' value={ width } onChange={ linkState(this, 'width') } />
+					<Field label='Height' type='number' value={ height } onChange={ linkState(this, 'height') } />
+					<Choice label='Shape' value={ shape } onChange={ linkState(this, 'shape') }>
 						<option value='circle'>Circle</option>
 						<option value='rect'>Rectangle</option>
-					</select>
-					<button>New</button>
+					</Choice>
+					<div>
+						<Button>New</Button>
+					</div>
 				</div>
 			</section>
 		);

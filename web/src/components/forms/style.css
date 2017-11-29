@@ -1,0 +1,20 @@
+.label {
+  display: flex;
+  justify-content: space-between;
+}
+.label > span {
+  font-weight: bold;
+  flex-basis: 7em;
+}
+.label > input,
+.label > select {
+  flex-grow: 1;
+}
+
+.button {
+  font-size: 1rem;
+  padding: 0.5em;
+  color: white;
+  background: rgb(45, 45, 45);
+  border: none;
+}
