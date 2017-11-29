@@ -2,7 +2,7 @@ import { h, Component } from 'preact';
 import { Link } from 'preact-router/match';
 import linkState from 'linkstate'
 import style from './style';
-import { Field, Choice, Button } from '../forms'
+import { Field, Choice, Button, FormGroup } from '../forms'
 import { getURLForSVG, getPathForFill, linearGradientRandom } from '../../api/swatches'
 
 export default class Swatches extends Component {
@@ -35,11 +35,13 @@ export default class Swatches extends Component {
 						<option value='circle'>Circle</option>
 						<option value='rect'>Rectangle</option>
 					</Choice>
-					<Choice label='Fill Type' value={ fill.type } onChange={ linkState(this, 'fill.type') }>
-						<option value='linear-gradient'>Linear Gradient</option>
-					</Choice>
-					<Field label='Fill Color 1' value={ fill.args[0] } onChange={ linkState(this, 'fill.args.0') } />
-					<Field label='Fill Color 2' value={ fill.args[1] } onChange={ linkState(this, 'fill.args.1') } />
+					<FormGroup label='Fill'>
+						<Choice label='Type' value={ fill.type } onChange={ linkState(this, 'fill.type') }>
+							<option value='linear-gradient'>Linear Gradient</option>
+						</Choice>
+						<Field label='Color 1' value={ fill.args[0] } onChange={ linkState(this, 'fill.args.0') } />
+						<Field label='Color 2' value={ fill.args[1] } onChange={ linkState(this, 'fill.args.1') } />
+					</FormGroup>
 					<div>
 						<Button>New</Button>
 					</div>

@@ -41,3 +41,15 @@ export function Button({
     </button>
   )
 }
+
+export function FormGroup({
+  label,
+  children
+}) {
+  return (
+    <fieldset className={ style.fieldset }>
+      <legend>{ label }</legend>
+      { children }
+    </fieldset>
+  )
+}
