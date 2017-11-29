@@ -5,12 +5,14 @@ export function Field({
   label,
   type,
   value,
+  children,
   onChange
 }) {
   return (
     <label className={ style.label }>
       <span>{ label }</span>
       <input type={ type } value={ value } onInput={ onChange } />
+      { children }
     </label>
   )
 }
